@@ -123,6 +123,10 @@ def check_choice(choice, has_money):
         print("\nPlease pick one of the options\n")
         return
 #############################################################################################################
+print("\n######################################################")
+print("         Welcome to Lawnmower Text Simulator!\nThe Goal is to purchase the best upgrade and get $1000!\n\n           As you hit financial checkpoints,\n    the shop will appear for purchasing upgrades")
+print("######################################################\n")
+
 while(True):
     has_money = False
     if(check_win_condition() == True):
