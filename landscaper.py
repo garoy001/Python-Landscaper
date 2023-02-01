@@ -1,4 +1,4 @@
-landscaper = {"teeth": True, "money": 0, "items": ["1"], "currently_equipped": "1"}
+landscaper = {"teeth": True, "money": 0, "items": ["1"], "currently_equipped": "1", "total income": 0 }
 
 shop_items = {  "1": {"name": "Teeth",
                     "price": "none",
@@ -28,6 +28,18 @@ dialogue_choices = {"1":"Press 1 to cut lawns",
 shop_escape = True
 space_text = " | "
 #############################################################################################################
+def check_money():
+    if(landscaper["currently_equipped"] == "1" and landscaper["money"] >= 5):
+        return True
+    elif(landscaper["currently_equipped"] == "2" and landscaper["money"] >= 25):
+        return True
+    elif(landscaper["currently_equipped"] == "3" and landscaper["money"] >=250):
+        return True
+    elif(landscaper["currently_equipped"] == "4" and landscaper["money"] >=500):
+        return True
+    else:
+        return False
+#############################################################################################################
 def check_win_condition():
     if(landscaper["currently_equipped"] == "5" and landscaper["money"] >= 1000):
         print("Congradulations you win!")
@@ -50,7 +62,8 @@ def check_win_condition():
 #############################################################################################################
 def check_stats():
     print("\n<<-----Stats----->>\n")
-    print("Money:  $"+ str(landscaper["money"]))
+    print("Money:                  $"+ str(landscaper["money"]))
+    print("Total Money Earned:     $" + str(landscaper["total income"]))
     print("\nItems: ")
     for item in landscaper["items"]:
         print("--"+shop_items[item]["name"])
@@ -97,8 +110,9 @@ def visit_shop():
 #############################################################################################################
 def check_choice(choice, has_money):
     if(choice == "1"):
-        print("\n!!! You have cut the lawn       +$"+str(shop_items[landscaper["currently_equipped"]]["income"])+"\n")
+        print("\n!!! You have cut the lawn       +$"+str(shop_items[landscaper["currently_equipped"]]["income"]))
         landscaper["money"] += shop_items[landscaper["currently_equipped"]]["income"]
+        landscaper["total income"] += shop_items[landscaper["currently_equipped"]]["income"]
         print("Current cash: $" + str(landscaper["money"]) + "\n")
     elif(choice == "2" and has_money == True):
         visit_shop()
@@ -113,7 +127,7 @@ while(True):
     has_money = False
     if(check_win_condition() == True):
         break
-    if(landscaper["money"] >= 5):
+    if(check_money()):
         has_money = True
         choice = input(dialogue_choices["1"] + space_text + dialogue_choices["2"] + space_text +dialogue_choices["3"]+space_text+ dialogue_choices["Q"] ).capitalize()
         if(choice == "Q"):
